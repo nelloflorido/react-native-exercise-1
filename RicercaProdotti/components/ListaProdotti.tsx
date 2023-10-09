@@ -2,14 +2,17 @@ import React, {useEffect, useState}  from 'react'
 import {Button, Text, View, StyleSheet, TextInput, ScrollView, Image, FlatList} from 'react-native'
 
 type Product ={
-    category:string;
-    description:string;
-    thumbnail:string;
+    item:{    
+        category:string;
+        description:string;
+        thumbnail:string;
+    }
+
 }
 
 export function ListaProdotti(){
 
-    const [resultProduct, setResultProduct] = useState<any>([])
+    const [resultProduct, setResultProduct] = useState()
     const [text, onChangeText] = useState('')
 
 
@@ -35,21 +38,32 @@ export function ListaProdotti(){
     return (
         <View style={styles.container}>
 
-            <View>
+            <View style={
+                {
+                    marginTop:20
+                }
+            }>
                 <Text>Ricerca:</Text>
                 <TextInput value={text} style={styles.input} onChangeText={onChangeText}/>
+                
             </View>
+
+
             <FlatList 
+            style={{height:700}}
                 data={resultProduct}
-                renderItem={(item:any)=>{
+                renderItem={(item:any)=> 
+                    {
+                       
                       return(  
-                        <View>
-                            <Image style={{width:200, height:200}} source={{uri:item.thumbnail}} />
-                            <Text>{item.category}</Text>
-                            <Text >{item.description}</Text>
+                        <View style={{marginTop:30, marginLeft:20}}>
+                            <Image style={{width:200, height:200}} source={{uri:item.item.thumbnail}} />
+                            <Text style={{marginTop:3}}>{item.item.category}</Text>
+                            <Text >{item.item.description}</Text>
                         </View>
                       )
-            }}/>
+            }}
+            />
         </View>
 
     )
@@ -58,9 +72,10 @@ export function ListaProdotti(){
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        height:70,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent:'center',
+        marginTop: 10       
+        
     },
     size: {
         width: 66,
@@ -70,6 +85,11 @@ const styles = StyleSheet.create({
         height: 40,
         margin: 12,
         borderWidth: 1,
-        padding: 10
+        padding: 10,
+        marginTop:20,
+        width: 100
       },
+      lista :{
+          marginTop:10
+      }
 })
